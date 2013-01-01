@@ -1,4 +1,30 @@
 html, body {
 	margin: 0;
-	background-color: #ff0000;
+	font-family:'Oswald', Arial;
+	background-color: #F0EEE9;
+}
+
+#header {
+	padding-left: 100px;
+	height:50px;
+
+	background-color: #10B18F;
+	color:#ffffff;
+	line-height: 50px;
+}
+
+#main {
+	margin:0 auto;
+	text-align: center;
+	width:50%;
+
+	background-color: #ffffff;
+	margin-top:50px;
+	padding:40px;
+	font-size: 120%;
+	font-weight: bold;
+}
+
+#footer {
+
 }

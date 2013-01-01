@@ -1,3 +1,3 @@
 <div id="main">
-	<?php put('message'); ?>
+	<?php echo $message; ?>
 </div>

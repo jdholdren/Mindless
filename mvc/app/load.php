@@ -28,13 +28,40 @@ class Load
 		}
 		if ($templateProperties)
 		{
-			require('./app/views/templates/template.php');
-			$template = new Template($name, $templateProperties);
-			$template->render();
+			$parts = $this->getTemplate($name, $templateProperties);
+			foreach($parts as $part)
+			{
+				require($part);
+			}
 		}
 		else
 		{
 			require('./app/views/' . $name);
 		}
+	}
+
+	private function getTemplate($name, $templateProperties)
+	{
+		$head = 'index.php';
+		$body = 'index.php';
+		$footer = 'index.php';
+
+		$url = './app/views/templates/' . ucfirst(strtolower($name)) . '/';
+		if (isset($templateProperties['body']))
+		{
+			$body = $templateProperties . '.php';
+		}
+
+		if (isset($templateProperties['head']))
+		{
+			$head = $templateProperties['head'] . '.php';
+		}
+
+		if (isset($templateProperties['footer']))
+		{
+			$footer = $templateProperties['footer'] . '.php';
+		}
+
+		return array($url. 'headers/' . $head, $url. 'bodies/' . $body, $url. 'footers/' . $footer);
 	}
 }

@@ -13,6 +13,6 @@ class HomeController extends Controller
 
 	public function IndexAction()
 	{
-		$this->load->render('Demo', array('test' => 'value'), true);
+		$this->load->render('Demo', array('message' => 'Looks like your Mindless MVC installation is working!'), true);
 	}
 }
