@@ -4,7 +4,7 @@ abstract class Model
 {
 	private $conn;
 
-	protected function __construct()
+	public function __construct()
 	{
 		try
 		{

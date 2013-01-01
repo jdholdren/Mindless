@@ -57,6 +57,6 @@ class Template
 	*/
 	public function render()
 	{
-		
+		// TODO: Display the template
 	}
 }
