@@ -4,16 +4,28 @@ Entry point for setting global values and url mapping
 */
 // Be sure to turn this off when not in production mode
 ini_set('display_errors', 1);
-
+/*
+error_reporting(0);
+@ini_set('display_errors', 0);
+*/
 // Initials
-define("CLEAN_URLS", true);
 
+// Requie the core
 require('./app/core.php');
 
+
+// ROUTING LOGIC
 $parsed = parse_url($_SERVER['REQUEST_URI']);
 $path = explode("/", $parsed['path']);
-array_splice($path, 0, 2);
+array_splice($path, 0, 1);
+$script = explode("/", str_replace($_SERVER['DOCUMENT_ROOT'], "", $_SERVER['SCRIPT_FILENAME']));
 
+
+while ($path[0] == $script[0])
+{
+	array_splice($path, 0 ,1);
+	array_splice($script, 0,1);
+}
 // Determine the controller
 $controllerName = ucfirst(strtolower($path[0])) . "Controller";
 if (($path[0] == "") || (!file_exists("./app/controllers/" . $controllerName . ".php")))
@@ -38,30 +50,15 @@ else
 {
 	$action = "IndexAction";
 }
-if (CLEAN_URLS)
-{
-	// Clean up the urls
-	$num_params = ceil(count($path) / 2);
-	$params = array();
-	for($i = 0; $i < $num_params; $i++)
-	{
-		$key = $i * 2;
-		$value = $key + 1;
-		if (array_key_exists($value, $path))
-		{
-			$params[$path[$key]] = $path[$value];
-		}
-		else
-		{
-			$params[$path[$key]] = "";
-		}
-	}
-	$controller->setParams($params, "get");
-}
-else
-{
-	$controller->setParams($_GET, "get");
-}
-$controller->setParams($_POST, "post");
 
-$controller->$action();
+// Remove the trailing space, if there is one
+if (end($path) == "")
+{
+	array_pop($path);
+}
+reset($path);
+
+echo $controllerName, "<br>", $action, "<br>";
+print_r($path);
+
+$controller->invoke($action, $path);

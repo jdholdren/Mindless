@@ -2,31 +2,11 @@
 
 abstract class Controller
 {
-	protected $get;
-	protected $post;
 	protected $load;
 
 	public function __construct()
 	{
 		$this->load = new Load();
-	}
-
-	/*
-	Sets the parameters into either the get or set variables for use in the controller
-	@param the parameter array 
-	@param the group: either get or set
-	@return void
-	*/
-	public function setParams($params, $group)
-	{
-		if ($group == "get")
-		{
-			$this->get = $params;
-		}
-		if ($group == "post")
-		{
-			$this->post = $params;
-		}
 	}
 
 	/*
@@ -67,5 +47,36 @@ abstract class Controller
 	private function redirectToAction()
 	{
 		// TODO: redirect to action
+	}
+
+	/*
+	Calls an action
+	@param the action name (Will already be formatted and appened 'Action')
+	@param the array of parameters from the get array
+	*/
+	public function invoke($action, $params)
+	{
+		call_user_func_array(array($this, $action), $params);
+	}
+
+	/*
+	Throws a status code and then exits
+	@param the status code
+	@param optional, the message
+	@return it exits
+	*/
+	public function throwStatus($code, $message = "")
+	{
+		header($message, true, $code);
+		exit();
+	}
+
+	/*
+	All controllers must have an Index Action, this is the defaul
+	It throws a 400 status
+	*/
+	public function IndexAction()
+	{
+		$this->throwStatus(400);
 	}
 }
