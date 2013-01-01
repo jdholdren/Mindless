@@ -13,5 +13,6 @@ class HomeController extends Controller
 
 	public function IndexAction()
 	{
+		$this->load->render('Demo', array('test' => 'value'), true);
 	}
 }

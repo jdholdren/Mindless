@@ -9,31 +9,32 @@ class Load
 
 	/*
 	Renders a view
-	@param the filename (including '.php') of the view OR the body if a template is specified
+	@param the filename (including '.php') using the current directory as the views folder OR the template name
 	@param optional data array
 	*/
-	public function render($view, $data = NULL)
+	public function render($name, $data = false, $templateProperties = false)
 	{
-		if (is_array($data))
+		if($data)
 		{
 			extract($data);
 		}
-		require_once("./app/views/" . $view);
-	}
 
-	/*
-	Renders a view using a template
-	@param the template name (Corresponding to the template folder, i.e. Demo)
-	@properties array of filenames(excluding '.php')
-	*/
-	public function useTemplate($name, $data = NULL, $properties = NULL)
-	{
-		require('./app/views/templates/template.php');
-		$template = new Template($name, $properties);
-		if (is_array($data))
+		function put($variable)
 		{
-			extract($data);
+			if (isset($$variable))
+			{
+				echo $$variable;
+			}
 		}
-		$template->render();
+		if ($templateProperties)
+		{
+			require('./app/views/templates/template.php');
+			$template = new Template($name, $templateProperties);
+			$template->render();
+		}
+		else
+		{
+			require('./app/views/' . $name);
+		}
 	}
 }

@@ -5,9 +5,9 @@ Object that manipulates and renders a template
 */
 class Template
 {
-	private $head;
-	private $body;
-	private $footer;
+	private $head = 'index.php';
+	private $body = 'index.php';
+	private $footer = 'index.php';
 	private $name;
 
 	/*
@@ -18,36 +18,24 @@ class Template
 	@param "body" optional the body to use
 	@param "footer" optional the footer to use
 	@return void
-	@note if an optional parameter is not provided, then the index.php file in the appropriate file is used
+	@note if an optional parameter is not provided, then the index.php file in the appropriate folder is used
 	*/
 	public function __construct($name, $properties)
 	{
 		$this->name = ucfirst(strtolower($name));
 		if (isset($properties['body']))
 		{
-			$this->body = body;
-		}
-		else
-		{
-			$this->body = "index";
+			$this->body = body . '.php';
 		}
 
 		if (isset($properties['head']))
 		{
-			$this->head = $properties['head'];
-		}
-		else
-		{
-			$this->head = "index";
+			$this->head = $properties['head'] . '.php';
 		}
 
 		if (isset($properties['footer']))
 		{
-			$this->head = $properties['footer'];
-		}
-		else
-		{
-			$this->footer = "index";
+			$this->head = $properties['footer'] . '.php';
 		}
 	}
 
@@ -57,6 +45,10 @@ class Template
 	*/
 	public function render()
 	{
-		// TODO: Display the template
+		$url = './app/views/templates/' . $this->name . '/';
+
+		require($url . 'headers/' . $this->head);
+		require($url . 'bodies/' . $this->body);
+		require($url . 'footers/' . $this->footer);
 	}
 }
