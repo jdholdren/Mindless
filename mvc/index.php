@@ -57,8 +57,4 @@ if (end($path) == "")
 	array_pop($path);
 }
 reset($path);
-
-echo $controllerName, "<br>", $action, "<br>";
-print_r($path);
-
 $controller->invoke($action, $path);
