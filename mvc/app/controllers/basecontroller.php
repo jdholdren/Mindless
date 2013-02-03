@@ -44,7 +44,7 @@ abstract class Controller
 	@param the action name
 	@return void
 	*/
-	private function redirectToAction($controller, $action, $params = null)
+	protected function redirectToAction($controller, $action, $params = null)
 	{
 		require_once('./app/controllers/' . ucfirst(strtolower($controller)) . '.php');
 		$controller = new $controller();
