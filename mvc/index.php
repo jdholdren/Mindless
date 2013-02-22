@@ -18,7 +18,7 @@ require('./app/core.php');
 $parsed = parse_url(strtolower($_SERVER['REQUEST_URI']));
 $path = explode("/", $parsed['path']);
 array_splice($path, 0, 1);
-$script = explode("/", str_replace($_SERVER['DOCUMENT_ROOT'], "", $_SERVER['SCRIPT_FILENAME']));
+$script = explode("/", strtolower(str_replace($_SERVER['DOCUMENT_ROOT'], "", $_SERVER['SCRIPT_FILENAME'])));
 
 
 while ($path[0] == $script[0])
