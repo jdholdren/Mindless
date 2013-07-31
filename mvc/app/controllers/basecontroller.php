@@ -3,6 +3,8 @@
 abstract class Controller
 {
 	protected $load;
+	// The token where we store login info in a session
+	protected $sessionToken = 'mindless-mvc';
 
 	public function __construct()
 	{
@@ -16,7 +18,7 @@ abstract class Controller
 	@return true if all are provided
 	@return false if any are missing
 	*/
-	private function checkVars($vars, $search)
+	protected function checkVars($vars, $search)
 	{
 		if (is_array($vars))
 		{
@@ -43,13 +45,29 @@ abstract class Controller
 	@param the controller name OR the controller object
 	@param the action name
 	@return void
+	// TODO make a function to accept params
 	*/
-	protected function redirectToAction($controller, $action, $params = null)
+	protected function redirectToAction($action, $controller = false, $params = null)
 	{
-		require_once('./app/controllers/' . ucfirst(strtolower($controller)) . '.php');
-		$controller = new $controller();
-		$action = ucfirst(strtolower($action)) . 'Action';
-		return $controller->invoke($action, $params);
+		$action = strtolower($action);
+
+		if (strtolower($action) == 'index')
+		{
+			$action = '';
+		}
+
+		if ($controller && $controller != 'Home')
+		{
+			$controller = strtolower($controller);
+			$url = INSTALL_ROOT . $controller . '/' . $action;
+		}
+		else
+		{
+			$url = INSTALL_ROOT . $action;
+		}
+
+		header('Location: ' .$url);
+		exit();
 	}
 
 	/*
@@ -59,7 +77,14 @@ abstract class Controller
 	*/
 	public function invoke($action, $params)
 	{
-		call_user_func_array(array($this, $action), $params);
+		$decoded = array();
+
+		foreach($params as $param)
+		{
+			$decoded[] = urldecode($param);
+		}
+
+		call_user_func_array(array($this, $action), $decoded);
 	}
 
 	/*
@@ -68,7 +93,7 @@ abstract class Controller
 	@param optional, the message
 	@return it exits
 	*/
-	public function throwStatus($code, $message = "")
+	public function throwStatus($code, $message = " ")
 	{
 		header($message, true, $code);
 		exit();
@@ -80,6 +105,53 @@ abstract class Controller
 	*/
 	public function IndexAction()
 	{
-		$this->throwStatus(400);
+		$this->throwStatus(404);
 	}
+
+	/**
+	* Checks to see if a user is logged in
+	* @return boolean
+	**/
+	public function isLoggedIn()
+	{
+		if (isset($_SESSION[$this->sessionToken]))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
+	* Logs in the user by storing his email in the session
+	* @param the email
+	* @return void
+	**/
+	protected function logIn($email)
+	{
+		$_SESSION[$this->sessionToken] = $email;
+	}
+
+	/**
+	* Logs out the current user
+	* @return void
+	**/
+	protected function logOut()
+	{
+		$_SESSION = array();
+
+		if (ini_get("session.use_cookies"))
+		{
+    		$params = session_get_cookie_params();
+    		setcookie(session_name(), '', time() - 42000,
+        	$params["path"], $params["domain"],
+        	$params["secure"], $params["httponly"]
+    		);
+		}
+		
+		session_destroy();
+	}
+
 }

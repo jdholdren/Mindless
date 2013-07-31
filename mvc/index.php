@@ -2,24 +2,31 @@
 /*
 Entry point for setting global values and url mapping
 */
-// Be sure to turn this off when not in production mode
-ini_set('display_errors', 1);
-/*
-error_reporting(0);
-@ini_set('display_errors', 0);
-*/
-// Initials
 
+// Initials
+define('DEV_MODE', true);
+
+if (!DEV_MODE)
+{
+	error_reporting(0);
+	@ini_set('display_errors', 0);
+}
+
+session_start();
 // Requie the core
 require('./app/core.php');
 
+//-----------------------
+// define the app and uri root for your mindless installation
+define('APP_ROOT', 'http://localhost/');
+define('INSTALL_ROOT', 'http://localhost/');
 
 // ROUTING LOGIC
 $parsed = parse_url(strtolower($_SERVER['REQUEST_URI']));
 $path = explode("/", $parsed['path']);
-array_splice($path, 0, 1);
-$script = explode("/", strtolower(str_replace($_SERVER['DOCUMENT_ROOT'], "", $_SERVER['SCRIPT_FILENAME'])));
-
+array_splice($path, 0, 2);
+$script = explode("/", str_replace($_SERVER['DOCUMENT_ROOT'], "", $_SERVER['SCRIPT_FILENAME']));
+array_splice($script,0, 1);
 
 while ($path[0] == $script[0])
 {
@@ -28,6 +35,7 @@ while ($path[0] == $script[0])
 }
 // Determine the controller
 $controllerName = ucfirst(strtolower($path[0])) . "Controller";
+
 if (($path[0] == "") || (!file_exists("./app/controllers/" . $controllerName . ".php")))
 {
 	$controllerName = "HomeController";
@@ -57,4 +65,5 @@ if (end($path) == "")
 	array_pop($path);
 }
 reset($path);
+
 $controller->invoke($action, $path);

@@ -6,26 +6,29 @@ Class for rendering views
 class Load
 {
 	public function __construct(){}
+	private $data;
+	private $js = array();
+	private $css = array();
 
 	/*
 	Renders a view
 	@param the filename (including '.php') using the current directory as the views folder OR the template name
 	@param optional data array
 	*/
-	public function render($name, $data = false, $templateProperties = false)
+	public function render($name, $data = array(), $templateProperties = false)
 	{
-		if($data)
+		$this->data = $data;
+
+		if (isset($templateProperties['css']))
 		{
-			extract($data);
+			$this->css = $templateProperties['css'];
 		}
 
-		function put($variable)
+		if (isset($templateProperties['js']))
 		{
-			if (isset($$variable))
-			{
-				echo $$variable;
-			}
+			$this->js = $templateProperties['js'];
 		}
+		
 		if ($templateProperties)
 		{
 			$parts = $this->getTemplate($name, $templateProperties);
@@ -49,7 +52,7 @@ class Load
 		$url = './app/views/templates/' . ucfirst(strtolower($name)) . '/';
 		if (isset($templateProperties['body']))
 		{
-			$body = $templateProperties . '.php';
+			$body = $templateProperties['body'] . '.php';
 		}
 
 		if (isset($templateProperties['head']))
@@ -64,4 +67,54 @@ class Load
 
 		return array($url. 'headers/' . $head, $url. 'bodies/' . $body, $url. 'footers/' . $footer);
 	}
+
+	/**
+	* Checks to see if a variable has been passed and outputs it
+	* @param the variable name
+	* @return void
+	**/
+	private function put($varName)
+	{
+		if (isset($this->data[$varName]))
+		{
+			echo $this->data[$varName];
+		}
+	}
+
+	/**
+	 * Outputs the css array
+	 * @return void
+	 **/
+	private function outputCss()
+	{
+		if (empty($this->css))
+		{
+			return false;
+		}
+
+		foreach($this->css as $url)
+		{
+			$html = '<link rel="stylesheet" href="' . $url . '" />';
+			echo $html;
+		}
+	}
+
+	/**
+	 * Outputs the js array
+	 * @return void
+	 **/
+	private function outputJs()
+	{
+		if (empty($this->css))
+		{
+			return false;
+		}
+
+		foreach($this->js as $url)
+		{
+			$html = '<script src="' . $url . '" type="text/javascript"></script>';
+			echo $html;
+		}
+	}
+
 }

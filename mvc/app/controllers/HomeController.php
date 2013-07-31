@@ -13,7 +13,10 @@ class HomeController extends Controller
 
 	public function IndexAction()
 	{
-		// This is a sample rendering of a template using some dummy data
-		$this->load->render('Demo', array('message' => 'Looks like your Mindless MVC installation is working!'), true);
+		// Throw a 404 if we we're passed something unexpected
+		if (func_num_args() > 0)
+		{
+			$this->throwStatus(404);
+		}
 	}
 }
