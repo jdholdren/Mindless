@@ -1,6 +1,6 @@
 <?php
 
-abstract class Controller
+class Controller
 {
 	protected $load;
 	// The token where we store login info in a session
