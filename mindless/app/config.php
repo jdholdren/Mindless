@@ -11,3 +11,5 @@ $config = array(
 			'user' => 'username'
 			),
 	);
+
+// Constants
