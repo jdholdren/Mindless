@@ -6,10 +6,10 @@ require('./app/config.php');
 require('load.php');
 
 // Generic Classes
-require('./app/controllers/basecontroller.php');
-require('./app/models/basemodel.php');
+require('./app/controllers/ControllerBase.php');
+require('./app/models/ModelBase.php');
 
-// data retrieval
+// Data retrieval
 require('./app/activeRecord.php');
 
 // Routing
@@ -17,7 +17,7 @@ require('./app/http/Router.php');
 require('./app/http/Route.php');
 
 // Construct Router
-$router = new Router($_SERVER['SCRIPT_FILENAME'], false);
+$router = new Router($_SERVER['SCRIPT_FILENAME'], true);
 
 // Define Routes
 require('./app/http/routing.php');

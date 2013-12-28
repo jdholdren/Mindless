@@ -1,11 +1,9 @@
 <?php
 
-abstract class Model
-{
+abstract class Model {
 	protected $ar;
 	
-	public function __construct()
-	{
+	public function __construct() {
 		global $ar;
 		$this->ar = $ar;
 	}
