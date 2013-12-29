@@ -9,7 +9,7 @@ ___________________
 Mindless is incredibly easy to install, and only requires simple file manipulation.
 
 1. Download Mindless MVC as a zip
-2. Extract the contents of the "Mindless" folder into the root folder of the directory where you wish to install the framework.
+2. Extract the contents of the "Mindless" folder (The one that contains "index.php" and "app") into the root folder of the directory where you wish to install the framework.
 
 ## Configuration
 
@@ -24,13 +24,13 @@ Two types of routing are supported, and can be supported simultaneously.
 	This is the most basic routing available. The framework will attempt to match a pattern to the request URI.
 	For example: mysite.com/user/james/
 
-	It will first check if "user" is a valid controller name. If it is, the framework knows that request is specifying the controller name, and will then check if "james" is a vaild action on the User controller. If it is, it calls the function JamesAction(). Otherwise, it defaults to IndexAction(). If "user" is not a valid controller, it defaults to the "Home" controller.
+	It will first check if "user" is a valid controller name. If it is, the framework knows that request is specifying the controller name, and will then check if "james" is a valid action on the User controller. If it is, it calls the function JamesAction(). Otherwise, it defaults to IndexAction(). If "user" is not a valid controller, it defaults to the "Home" controller.
 
 	All other parts separated by slashes are treated as parameters and passed to the Action.
 
 2. Defined Routing
 	
-	Specific routes can be defined in "app/http/routing.php". They also take precedent over vanialla routes.
+	Specific routes can be defined in "app/http/routing.php". They also take precedent over vanilla routes.
 
 	To enable ONLY defined routes and disallow vanilla routing, set 'strict_routing' to true in "config.php".
 
@@ -77,7 +77,7 @@ For Actions, there are two types:
 
 	In vanilla routing, the request for mysite.com/user/some will call this function.
 
-2. Method Specific ACtions
+2. Method Specific Actions
 	These actions are specified for a certain request method, i.e. Post, Get, Delete, etc. Please note that these actions take precedent over the method agnostic ones.
 	To define a method specific action:
 
