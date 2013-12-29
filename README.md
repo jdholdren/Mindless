@@ -9,7 +9,7 @@ ___________________
 Mindless is incredibly easy to install, and only requires simple file manipulation.
 
 1. Download Mindless MVC as a zip
-2. Extract the contents of the "Mindless" folder (The one that contains "index.php" and "app") into the root folder of the directory where you wish to install the framework.
+2. Extract the contents of the "Mindless-MVC" folder into the root folder of the directory where you wish to install the framework.
 
 ## Configuration
 
