@@ -212,7 +212,7 @@ class Router {
 			);
 		}
 		// Search for a vanilla route if strict routing is not enabled
-		elseif ((!$this->strictRouting) && ($route = $this->searchForVanillaRoute())) {
+		elseif ((!$this->strictRouting) && ($route = $this->searchForVanillaRoute($uri, $method))) {
 			return $route;
 		}
 		else {

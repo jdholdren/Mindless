@@ -10,7 +10,7 @@ require('./app/controllers/ControllerBase.php');
 require('./app/models/ModelBase.php');
 
 // Data retrieval
-require('./app/activeRecord.php');
+require('./app/Database.php');
 
 // Routing
 require('./app/http/Router.php');
@@ -41,4 +41,10 @@ function __autoload($className) {
 	else {
 		throw new Exception("Could not load class: " . $className);
 	}
+}
+
+// Create the database access layer
+if ($config['use_db']) {
+	global $db;
+	$db = new Database($config['db']);
 }
