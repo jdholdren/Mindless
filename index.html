@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Mindless by jdholdren</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Mindless</h1>
+        <h2>The Lightweight and Straightforward MVC framework</h2>
+        <a href="https://github.com/jdholdren/Mindless" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="mindless-mvc-framework-v100" class="anchor" href="#mindless-mvc-framework-v100"><span class="octicon octicon-link"></span></a>Mindless MVC Framework v1.0.0</h1>
+
+<p>Only 15 KB, the Lightweight and Straightforward MVC Framework</p>
+
+<hr><h2>
+<a name="two-step-intallation" class="anchor" href="#two-step-intallation"><span class="octicon octicon-link"></span></a>Two Step Intallation</h2>
+
+<p>Mindless is incredibly easy to install, and only requires simple file manipulation.</p>
+
+<ol>
+<li>Download Mindless MVC as a zip</li>
+<li>Extract the contents of the "Mindless" folder (The one that contains "index.php" and "app") into the root folder of the directory where you wish to install the framework.</li>
+</ol><h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>All configuration settings are stored in "app/config.php". Enter your MySQL connection details in the 'db' array, or set 'use_db' to false to prohibit the framework from automatically connecting.</p>
+
+<h2>
+<a name="routing" class="anchor" href="#routing"><span class="octicon octicon-link"></span></a>Routing</h2>
+
+<p>Two types of routing are supported, and can be supported simultaneously.</p>
+
+<ol>
+<li>
+<p>Vanilla Routing</p>
+
+<p>This is the most basic routing available. The framework will attempt to match a pattern to the request URI.
+For example: mysite.com/user/james/</p>
+
+<p>It will first check if "user" is a valid controller name. If it is, the framework knows that request is specifying the controller name, and will then check if "james" is a valid action on the User controller. If it is, it calls the function JamesAction(). Otherwise, it defaults to IndexAction(). If "user" is not a valid controller, it defaults to the "Home" controller.</p>
+
+<p>All other parts separated by slashes are treated as parameters and passed to the Action.</p>
+</li>
+<li>
+<p>Defined Routing</p>
+
+<p>Specific routes can be defined in "app/http/routing.php". They also take precedent over vanilla routes.</p>
+
+<p>To enable ONLY defined routes and disallow vanilla routing, set 'strict_routing' to true in "config.php".</p>
+
+<p>To define a route, you must call $router-&gt;route() like so:
+route(request method, uri string pattern, controller name (excluding the 'Controller' on the end), entire action name)</p>
+
+<p>For example:</p>
+
+<div class="highlight highlight-php"><pre><span class="nv">$router</span><span class="o">-&gt;</span><span class="na">route</span><span class="p">(</span><span class="s1">'post'</span><span class="p">,</span> <span class="s1">'/signup/:id'</span><span class="p">,</span> <span class="s1">'User'</span><span class="p">,</span> <span class="s1">'newUserFunction'</span><span class="p">);</span>
+</pre></div>
+
+<p>This will cause any URI matching the pattern of mysite.com/signup/someRandomParameter to call the "newUserFunction" action on the "User" controller, with "someRandomParameter" provided as an argument.</p>
+</li>
+</ol><h2>
+<a name="controllers-and-actions" class="anchor" href="#controllers-and-actions"><span class="octicon octicon-link"></span></a>Controllers and Actions</h2>
+
+<p>All controllers are stored within the "app/controllers" folder. To make a new controller, first name the file "NameController.php". Then, in the file, you must have at least the following:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">class</span> <span class="nc">NameController</span> <span class="k">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>And that's it.</p>
+
+<h3>
+<a name="method-types" class="anchor" href="#method-types"><span class="octicon octicon-link"></span></a>Method Types</h3>
+
+<p>For Actions, there are two types:</p>
+
+<ol>
+<li>
+<p>Method Agnostic Actions
+These actions do not care for the request method, and are defined like this:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">SomeAction</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// More code here</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>In vanilla routing, the request for mysite.com/user/some will call this function.</p>
+</li>
+<li>
+<p>Method Specific Actions
+These actions are specified for a certain request method, i.e. Post, Get, Delete, etc. Please note that these actions take precedent over the method agnostic ones.
+To define a method specific action:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">SomeActionPost</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// More code here</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>If mysite.com/user/some is called using the post method, then this action will be called.</p>
+</li>
+</ol><p>Please Note: Both types of methods can be used. For example:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">SomeAction</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// This function is called as a fallback</span>
+    <span class="p">}</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">SomeActionPost</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// This function is called only if the "Some" action is called on the "User" controller</span>
+        <span class="c1">// using the "POST" method</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Here, if mysite.com/user/some is requested with the POST method, "SomeActionPost" will be called. However, if any other method is used, it defaults to "SomeAction". </p>
+
+<h3>
+<a name="parameters" class="anchor" href="#parameters"><span class="octicon octicon-link"></span></a>Parameters</h3>
+
+<p>Parameters can be passed to actions by specifying arguments in the function:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">SomeAction</span><span class="p">(</span><span class="nv">$email</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+
+<p>Though you must manually check that they are supplied to the function.</p>
+
+<h3>
+<a name="lazy-loading" class="anchor" href="#lazy-loading"><span class="octicon octicon-link"></span></a>Lazy Loading</h3>
+
+<p>There is no need to require models individually since lazy loading is enabled. Hence, when creating actions, you can simply begin to use model classes as though they were already defined:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">SomeAction</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>The framework will automatically include the "User" class, thus reducing the number of files to only the ones needed per request.</p>
+
+<h2>
+<a name="models" class="anchor" href="#models"><span class="octicon octicon-link"></span></a>Models</h2>
+
+<p>All models are stored in the "app/models" folder. They have no naming requirements other than the name of the file is the same as the class name.</p>
+
+<p>For example, when constructing a "User" model, first create a "User.php" file in "app/models". Then write in the "User.php" file:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Model</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/jdholdren/Mindless/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/jdholdren/Mindless/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/jdholdren/Mindless"></a> is maintained by <a href="https://github.com/jdholdren">jdholdren</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
