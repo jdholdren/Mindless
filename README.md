@@ -99,7 +99,8 @@ class UserController extends Controller {
 		// This function is called as a fallback
 	}
 	public function SomeActionPost() {
-		// This function is called only if the "Some" action is called on the "User" controller using the "POST" method
+		// This function is called only if the "Some" action is called on the "User" controller
+		// using the "POST" method
 	}
 }
 ```
