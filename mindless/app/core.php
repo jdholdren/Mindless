@@ -17,7 +17,7 @@ require('./app/http/Router.php');
 require('./app/http/Route.php');
 
 // Construct Router
-$router = new Router($_SERVER['SCRIPT_FILENAME'], false);
+$router = new Router($_SERVER['SCRIPT_FILENAME'], $config['strict_routing']);
 
 // Define Routes
 require('./app/http/routing.php');

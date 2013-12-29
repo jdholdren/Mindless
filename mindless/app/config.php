@@ -11,4 +11,5 @@ $config = array(
 			'user' => 'username'
 			),
 		'use_db' => true,
+		'strict_routing' => false,
 	);
