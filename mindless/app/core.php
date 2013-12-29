@@ -35,9 +35,6 @@ function __autoload($className) {
 	if (file_exists($url)) {
 		require($url);
 	}
-	elseif (file_exists($formsUrl)) {
-		require($formsUrl);
-	}
 	else {
 		throw new Exception("Could not load class: " . $className);
 	}
