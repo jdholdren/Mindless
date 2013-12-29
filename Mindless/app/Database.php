@@ -1,10 +1,10 @@
 <?php
 
 /**
-* Active Record for the database
+* Database access layer
 **/
 
-class activeRecord
+class Database
 {
 	// The mysqli object
 	private $conn;

@@ -10,4 +10,6 @@ $config = array(
 			'databaseName' => 'database_name',
 			'user' => 'username'
 			),
+		'use_db' => true,
+		'strict_routing' => false,
 	);
