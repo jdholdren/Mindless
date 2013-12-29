@@ -1,10 +1,10 @@
 <?php
 
 abstract class Model {
-	protected $ar;
+	protected $db;
 	
 	public function __construct() {
-		global $ar;
-		$this->ar = $ar;
+		global $db;
+		$this->db = $db;
 	}
 }
