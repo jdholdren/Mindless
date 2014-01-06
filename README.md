@@ -1,4 +1,4 @@
-Mindless MVC Framework v1.0.0
+Mindless MVC Framework v1.0.1
 =============
 
 Only 15 KB, the Lightweight and Straightforward MVC Framework

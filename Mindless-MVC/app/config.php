@@ -12,4 +12,5 @@ $config = array(
 			),
 		'use_db' => true,
 		'strict_routing' => false,
+		'dev_mode' => true,
 	);
