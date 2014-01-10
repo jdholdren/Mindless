@@ -9,32 +9,6 @@ class Controller
 	}
 
 	/*
-	Redirects the action
-	@param the controller name OR the controller object
-	@param the action name
-	@return void
-	// TODO make a function to accept params
-	*/
-	protected function redirectToAction($action, $controller = false, $params = null) {
-		$action = strtolower($action);
-
-		if (strtolower($action) == 'index') {
-			$action = '';
-		}
-
-		if ($controller && $controller != 'Home') {
-			$controller = strtolower($controller);
-			$url = INSTALL_ROOT . $controller . '/' . $action;
-		}
-		else {
-			$url = INSTALL_ROOT . $action;
-		}
-
-		header('Location: ' .$url);
-		exit();
-	}
-
-	/*
 	Calls an action
 	@param the action name (Will already be formatted and appened 'Action')
 	@param the array of parameters from the get array
