@@ -143,7 +143,7 @@ class Router {
 		}
 
 		// Determine if the first part is a vaild controller name
-		if (!empty($parts[0]) && file_exists($fileName = './controllers/' . ucfirst($parts[0]) . 'Controller.php')) {
+		if (!empty($parts[0]) && file_exists($fileName = './app/controllers/' . ucfirst($parts[0]) . 'Controller.php')) {
 			require($fileName);
 			$controller = ucFirst($parts[0]) . 'Controller';
 
@@ -171,6 +171,10 @@ class Router {
 
 			// Splice off the action part
 			array_splice($parts, 0, 1);
+		}
+		// Check for IndexMethod()
+		elseif (method_exists($controller, 'IndexAction' . $method)) {
+			$action = 'IndexAction' . $method;
 		}
 		else {
 			// The action is be default, index
@@ -201,6 +205,9 @@ class Router {
 			// Switch the method to get
 			$method = 'get';
 		}
+
+		// Remove the trailing slash of the uri, if there is one
+		$uri = rtrim($uri, '/');
 
 		// Defined routes take precedent over 
 		// Check 'any' set first, then the method's array, then vanilla if strict is off
