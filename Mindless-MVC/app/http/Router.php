@@ -143,7 +143,7 @@ class Router {
 		}
 
 		// Determine if the first part is a vaild controller name
-		if (!empty($parts[0]) && file_exists($fileName = './controllers/' . ucfirst($parts[0]) . 'Controller.php')) {
+		if (!empty($parts[0]) && file_exists($fileName = './app/controllers/' . ucfirst($parts[0]) . 'Controller.php')) {
 			require($fileName);
 			$controller = ucFirst($parts[0]) . 'Controller';
 
