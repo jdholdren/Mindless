@@ -20,7 +20,9 @@ if (!$config['dev_mode']) {
 	@ini_set('display_errors', 0);
 }
 
-$determinedRoute = $router->determineRoute($_SERVER['REQUEST_URI'], strtolower($_SERVER['REQUEST_METHOD']));
+$uri = preg_replace('/' . preg_replace('/\//', '\/', preg_replace('/\/index.php/', '', $_SERVER['SCRIPT_NAME'])) . '/', '', $_SERVER['REQUEST_URI']);
+
+$determinedRoute = $router->determineRoute($uri, strtolower($_SERVER['REQUEST_METHOD']));
 
 // Check if a controller has been created
 if (!empty($determinedRoute['controller'])) {
