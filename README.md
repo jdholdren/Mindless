@@ -1,4 +1,4 @@
-Mindless MVC Framework v1.0.1
+Mindless MVC Framework v1.1.0
 =============
 
 Only 15 KB, the Lightweight and Straightforward MVC Framework
@@ -52,9 +52,6 @@ All controllers are stored within the "app/controllers" folder. To make a new co
 
 ```php
 class NameController extends Controller {
-	public function __construct() {
-		parent::__construct();
-	}
 }
 ```
 
@@ -139,7 +136,4 @@ For example, when constructing a "User" model, first create a "User.php" file in
 
 ```php
 class User extends Model {
-	public function __construct() {
-		parent::__construct();
-	}
 }
