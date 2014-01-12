@@ -172,6 +172,10 @@ class Router {
 			// Splice off the action part
 			array_splice($parts, 0, 1);
 		}
+		// Check for IndexMethod()
+		elseif (method_exists($controller, 'IndexAction' . $method)) {
+			$action = 'IndexAction' . $method;
+		}
 		else {
 			// The action is be default, index
 			$action = 'IndexAction';
@@ -201,6 +205,9 @@ class Router {
 			// Switch the method to get
 			$method = 'get';
 		}
+
+		// Remove the trailing slash of the uri, if there is one
+		$uri = rtrim($uri, '/');
 
 		// Defined routes take precedent over 
 		// Check 'any' set first, then the method's array, then vanilla if strict is off
