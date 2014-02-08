@@ -40,8 +40,10 @@ function __autoload($className) {
 	}
 }
 
+// Create the global database connection
+global $db;
+
 // Create the database access layer
 if ($config['use_db']) {
-	global $db;
 	$db = new Database($config['db']);
 }
