@@ -12,7 +12,7 @@ class Route {
 	/**
 	* @param string controller name
 	* @param string action name
-	**/
+	*/
 	public function __construct($controller, $action) {
 		$this->controller = $controller;
 		$this->action = $action;
@@ -20,7 +20,7 @@ class Route {
 
 	/**
 	* @return Controller name
-	**/
+	*/
 	public function getController() {
 		return $this->controller;
 	}
@@ -36,14 +36,14 @@ class Route {
 	* Sets parameters
 	* @param array of parameters
 	* @return void
-	**/
+	*/
 	public function setParams($params) {
 		$this->params = $params;
 	}
 
 	/**
 	* @return params
-	**/
+	*/
 	public function getParams() {
 		return $this->params;
 	}

@@ -4,33 +4,36 @@ class Controller
 {
 	protected $load;
 
+	protected $token = '';
+
 	public function __construct() {
 		$this->load = new Load();
 	}
 
-	/*
-	Calls an action
-	@param the action name (Will already be formatted and appened 'Action')
-	@param the array of parameters from the get array
+	/**
+	* Calls an action
+	* @param the action name (Will already be formatted and appened 'Action')
+	* @param the array of parameters from the get array
 	*/
 	public function invoke($action, $params) {
 		call_user_func_array(array($this, $action), $params);
 	}
 
-	/*
-	Throws a status code and then exits
-	@param the status code
-	@param optional, the message
-	@return it exits
+	/**
+	* Throws a status code and then exits
+	* @param the status code
+	* @param optional, the message
+	* @return it exits
 	*/
 	public function throwStatus($code, $message = " ") {
 		header($message, true, $code);
 		exit();
 	}
 
-	/*
-	All controllers must have an Index Action, this is the defaul
-	It throws a 400 status
+	/**
+	* All controllers must have an Index Action, this is the defaul
+	* It throws a 400 status
+	* @return void
 	*/
 	public function IndexAction() {
 		$this->throwStatus(404);
@@ -40,9 +43,8 @@ class Controller
 	/**
 	* Logs out the current user
 	* @return void
-	**/
-	protected function logOut()
-	{
+	*/
+	protected function logOut() {
 		$_SESSION = array();
 
 		if (ini_get("session.use_cookies")) {
@@ -56,4 +58,15 @@ class Controller
 		session_destroy();
 	}
 
+	/**
+	* Checks if a user is logged in
+	* @return {bool}
+	*/
+	protected function loggedIn() {
+		if (!empty($_SESSION[$this->token])) {
+			return true;
+		}
+
+		return false;
+	}
 }

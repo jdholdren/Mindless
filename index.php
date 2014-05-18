@@ -3,7 +3,7 @@
 /**
 * Mindless MVC Framework
 * Created by James Holdren
-* Version 1.1.0
+* Version 2.0.0
 **/
 
 /**
@@ -15,7 +15,7 @@ session_start();
 // Requie the core
 require('./app/core.php');
 
-if (!$config['dev_mode']) {
+if (!Config::$dev_mode) {
 	error_reporting(0);
 	@ini_set('display_errors', 0);
 }

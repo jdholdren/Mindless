@@ -26,7 +26,7 @@ class Router {
 	* Constructor
 	* @param Script Filename in $_SERVER
 	* @param bool strict routing
-	**/
+	*/
 	public function __construct($scriptFilename, $strict) {
 		$this->strictRouting = $strict;
 	}
@@ -47,7 +47,7 @@ class Router {
 	* @param string controller name
 	* @param string action name
 	* @return void
-	**/
+	*/
 	public function route($method, $routeString, $controller, $action) {
 		// Make sure that method is valid
 		if (!$this->validMethod($method)) {
@@ -95,7 +95,7 @@ class Router {
 	* @param string method type
 	* @param string uri
 	* @return Request object if match. False otherwise
-	**/
+	*/
 	private function searchForRoute($method, $uri) {
 		// Matches spat out by the following regex function
 		$matches;
@@ -128,7 +128,7 @@ class Router {
 	*		'params' => array of params to be passed
 	*)
 	* false otherwise
-	**/
+	*/
 	public function searchForVanillaRoute($uri, $method) {
 		$parts = explode('/', $uri);
 
@@ -198,7 +198,7 @@ class Router {
 	*		'params' => array of params to be passed
 	*		OPTIONAL 'controller' => the controller object
 	*)
-	**/
+	*/
 	public function determineRoute($uri, $method) {
 		// Check that the method is allowed
 		if (!$this->validMethod($method)) {

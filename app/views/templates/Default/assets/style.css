@@ -1,0 +1,46 @@
+html, body {
+	margin:0px;
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+
+::selection {
+	background: #7fc;
+	color:#fff;
+}
+
+.greyed {
+	color:#ddd;
+}
+
+#contentWrapper {
+	margin-left:10em;
+	margin-top:10em;
+}
+
+#contentWrapper h1 {
+	margin-bottom: 0px;
+	font-size:3.5em;
+	line-height: 1em;
+}
+
+#contentWrapper h2 {
+	font-weight: 400;
+	font-size: 2em;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	line-height: 1em;
+}
+
+#contentWrapper p {
+	margin-top: 2.2em;
+	font-size: 1.5em;
+}
+
+#contentWrapper p a {
+	color:#5da;
+}
+
+.big {
+	font-size:4.5em !important;
+	color:#333;
+}
